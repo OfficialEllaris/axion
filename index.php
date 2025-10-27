@@ -7,16 +7,25 @@
     <title>Axion - Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/styles.css">
 </head>
 
-<body class="container">
+<body class="d-flex flex-column min-vh-100 container">
 
     <?php require_once "./includes/navbar.php" ?>
 
-    <h1>Hello, world!</h1>
+    <!-- Main content -->
+    <main class="flex-grow-1 d-flex">
+        <h1 class="mb-3">Welcome to Axion</h1>
+        <p class="text-muted">Your content goes here...</p>
+    </main>
+
+    <?php require_once "./includes/footer.php" ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
 </body>
 
 </html>

@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary my-4 rounded-4">
+<nav class="navbar navbar-expand-lg bg-body-tertiary my-4 rounded-4 px-2">
     <div class="container-fluid">
-        <a class="navbar-brand fw-medium pt-0 fs-2 text-success" href="./">Axion.</a>
+        <a class="navbar-brand fw-medium fs-2 text-success" href="./">Axion.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,8 @@
             </ul>
             <div class="d-flex gap-2">
                 <a href="./login.php" class="btn btn-success rounded-3">Login</a>
-                <a href="./onboarding.php" class="btn btn-outline-success rounded-3">Onboarding</a>
+                <a href="./onboarding.php"
+                    class="btn btn-outline-success rounded-3 border border-success border-dashed">Onboarding</a>
             </div>
         </div>
     </div>
