@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 
+<?php include "./server/initialize.php"; ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +20,19 @@
     <main class="flex-grow-1 d-flex flex-column">
         <h1>Onboarding.</h1>
 
-        <form class="row g-3">
+        <form method="POST" action="./onboarding.php" class="row g-3">
+            <?php
+            if (isset($_SESSION['flash_message'])) {
+                ?>
+                <div class="alert alert-success alert-dismissible fade show rounded-4" role="alert">
+                    <strong>Feedback!</strong> <?= $_SESSION['flash_message'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php
+                // Unset after displaying once
+                unset($_SESSION['flash_message']);
+            }
+            ?>
             <div class="col-md-4">
                 <label for="fullname" class="form-label">Full Name</label>
                 <input type="text" class="form-control form-control-lg rounded-4" name="fullname"
@@ -35,29 +49,11 @@
                     placeholder="********">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-lg btn-success rounded-4 w-auto">
+                <button type="submit" name="onboard_user" class="btn btn-lg btn-success rounded-4 w-auto">
                     Get Started
                 </button>
             </div>
         </form>
-
-        <br>
-        <h2>Submitted Data:</h2>
-        <?php
-
-        if (isset($_GET['fullname'])) {
-            echo "<p>Full Name: " . htmlspecialchars($_GET['fullname']) . "</p>";
-        }
-
-        if (isset($_GET['email_address'])) {
-            echo "<p>Email Address: " . htmlspecialchars($_GET['email_address']) . "</p>";
-        }
-
-        if (isset($_GET['password'])) {
-            echo "<p>Password: " . htmlspecialchars($_GET['password']) . "</p>";
-        }
-
-        ?>
     </main>
 
     <?php require_once "./includes/footer.php" ?>
