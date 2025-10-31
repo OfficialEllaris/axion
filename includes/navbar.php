@@ -16,11 +16,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./contact.php">Contact</a>
                 </li>
+                <?php if (isset($_SESSION['logged_in_user'])) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./settings.php">Settings</a>
+                    </li>
+                <?php } ?>
             </ul>
             <div class="d-flex gap-2">
-                <a href="./login.php" class="btn btn-success rounded-3">Login</a>
-                <a href="./onboarding.php"
-                    class="btn btn-outline-success rounded-3 border border-success border-dashed">Onboarding</a>
+                <?php if (isset($_SESSION['logged_in_user'])) { ?>
+                    <form action="" method="POST">
+                        <button class="btn btn-success rounded-3" name="logout_user">Logout</button>
+                    </form>
+                <?php } else { ?>
+                    <a href="./login.php" class="btn btn-success rounded-3">Login</a>
+                    <a href="./onboarding.php"
+                        class="btn btn-outline-success rounded-3 border border-success border-dashed">Onboarding</a>
+                <?php } ?>
             </div>
         </div>
     </div>
