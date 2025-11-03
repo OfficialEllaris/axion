@@ -7,7 +7,7 @@ include "./server/initialize.php";
 
 if (!isset($_SESSION['logged_in_user'])) {
     $_SESSION['flash_message'] = "Please log in to access the dashboard.";
-    header('Location: ./login.php');
+    header('Location: ./login');
     exit();
 }
 
@@ -27,7 +27,7 @@ if (!isset($_SESSION['logged_in_user'])) {
     <?php require_once "./includes/navbar.php" ?>
 
     <!-- Main content -->
-    <main class="flex-grow-1 d-flex flex-column">
+    <main class="flex-grow-1 d-flex flex-column gap-5">
         <?php
         if (isset($_SESSION['flash_message'])) {
             ?>
@@ -40,11 +40,11 @@ if (!isset($_SESSION['logged_in_user'])) {
             unset($_SESSION['flash_message']);
         }
         ?>
-        <h1 class="fs-3">
-            Update Account Settings
-        </h1>
 
         <form action="" method="post" class="row g-3">
+            <h1 class="fs-3">
+                Update Account Profile
+            </h1>
             <div class="col-md-6">
                 <label for="fullname" class="form-label">Full Name</label>
                 <input type="text" class="form-control form-control-lg rounded-4" name="fullname"
@@ -56,8 +56,34 @@ if (!isset($_SESSION['logged_in_user'])) {
                     value="<?= $_SESSION['logged_in_user']['email_address'] ?>" placeholder="e.g. john@example.com">
             </div>
             <div class="col-12">
-                <button type="submit" name="update_settings" class="btn btn-lg btn-success rounded-4 w-auto">
-                    Update Settings
+                <button type="submit" name="update_profile" class="btn btn-lg btn-success rounded-4 w-auto">
+                    Update Profile
+                </button>
+            </div>
+        </form>
+
+        <form action="" method="post" class="row g-3">
+            <h1 class="fs-3">
+                Manage Account Security
+            </h1>
+            <div class="col-md-4">
+                <label for="current_password" class="form-label">Current Password</label>
+                <input type="password" class="form-control form-control-lg rounded-4" name="current_password"
+                    placeholder="********">
+            </div>
+            <div class="col-md-4">
+                <label for="new_password" class="form-label">New Password</label>
+                <input type="password" class="form-control form-control-lg rounded-4" name="new_password"
+                    placeholder="********">
+            </div>
+            <div class="col-md-4">
+                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control form-control-lg rounded-4" name="password_confirmation"
+                    placeholder="********">
+            </div>
+            <div class="col-12">
+                <button type="submit" name="update_password" class="btn btn-lg btn-success rounded-4 w-auto">
+                    Update Password
                 </button>
             </div>
         </form>

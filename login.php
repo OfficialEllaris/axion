@@ -20,7 +20,7 @@
     <main class="flex-grow-1 d-flex flex-column">
         <h1>Login.</h1>
 
-        <form method="POST" action="./login.php" class="row g-3">
+        <form method="POST" action="./login" class="row g-3">
             <?php
             if (isset($_SESSION['flash_message'])) {
                 ?>
@@ -42,7 +42,7 @@
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
                     <label for="password" class="form-label me-auto">Password</label>
-                    <a href="./account-recovery.php"
+                    <a href="./account-recovery"
                         class="form-label text-success link-underline link-underline-opacity-0">Forgot
                         Password?</a>
                 </div>

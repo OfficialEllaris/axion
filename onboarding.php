@@ -20,7 +20,7 @@
     <main class="flex-grow-1 d-flex flex-column">
         <h1>Onboarding.</h1>
 
-        <form method="POST" action="./onboarding.php" class="row g-3">
+        <form method="POST" action="./onboarding" class="row g-3">
             <?php
             if (isset($_SESSION['flash_message'])) {
                 ?>
