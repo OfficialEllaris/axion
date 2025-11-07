@@ -11,6 +11,8 @@ if (!isset($_SESSION['logged_in_user'])) {
     exit();
 }
 
+$user = fetchUserData($dbConn);
+
 ?>
 
 <head>
@@ -41,7 +43,7 @@ if (!isset($_SESSION['logged_in_user'])) {
         }
         ?>
         <h1 class="fs-3">
-            Good afternoon <?= $_SESSION['logged_in_user']['fullname'] ?>!
+            Good afternoon <?= $user['fullname'] ?>!
         </h1>
 
         <div class="d-flex flex-column align-items-center gap-4 mt-4">
@@ -64,24 +66,30 @@ if (!isset($_SESSION['logged_in_user'])) {
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        <?php if (!empty($_SESSION['projects_table'])) { ?>
-                            <?php foreach ($_SESSION['projects_table'] as $index => $project): ?>
+                        <?php
+                        // Fetch projects for the logged-in user
+                        $user_id = $_SESSION['logged_in_user'];
+                        $projects = fetchUserProjects($dbConn, $user_id);
+                        ?>
+
+                        <?php if (!empty($projects)) { ?>
+                            <?php foreach ($projects as $index => $project): ?>
                                 <tr>
                                     <th scope="row" class="ps-4">
                                         <?= $index + 1 ?>
                                     </th>
                                     <td>
-                                        <?= $project["project_name"] ?>
+                                        <?= htmlspecialchars($project["title"]) ?>
                                     </td>
                                     <td>
-                                        <?= $project["project_deadline"] ?: "-- / --" ?>
+                                        <?= $project["deadline"] ? htmlspecialchars($project["deadline"]) : "-- / --" ?>
                                     </td>
                                     <td>
-                                        <?= $project["contractor_name"] ?: "-- / --" ?>
+                                        <?= $project["contractor_name"] ? htmlspecialchars(substr($project["contractor_name"], 0, 30)) . '...' : "-- / --" ?>
                                     </td>
                                     <td>
-                                        <?php if (is_numeric($project["project_budget"])) { ?>
-                                            $ <?= number_format($project["project_budget"], 2) ?>
+                                        <?php if (is_numeric($project["budget"])) { ?>
+                                            $ <?= number_format($project["budget"], 2) ?>
                                         <?php } else { ?>
                                             -- / --
                                         <?php } ?>
@@ -89,13 +97,13 @@ if (!isset($_SESSION['logged_in_user'])) {
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
                                             <form action="" method="post">
-                                                <input type="hidden" name="project_id" value="<?= $project["project_id"] ?>">
+                                                <input type="hidden" name="project_id" value="<?= $project["id"] ?>">
                                                 <button name="delete_project" class="badge text-bg-danger border border-danger"
                                                     onclick="return confirm('This action is irreversible! Please proceed with caution.');">
                                                     <i class="bi-trash"></i>
                                                 </button>
                                             </form>
-                                            <a href="./manage-project?project_id=<?= $project["project_id"] ?>" target="_blank"
+                                            <a href="./manage-project?project_id=<?= $project["id"] ?>" target="_blank"
                                                 class="badge text-bg-success border border-success d-flex align-items-center gap-1">
                                                 <i class="bi-gear"></i>Manage
                                             </a>
@@ -127,19 +135,19 @@ if (!isset($_SESSION['logged_in_user'])) {
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="projectName" class="form-label">Project Name</label>
-                                    <input type="text" name="project_name"
+                                    <input type="text" name="title"
                                         class="form-control form-control-lg rounded-4 border border-dashed"
                                         placeholder="Enter project name">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="projectDeadline" class="form-label">Project Deadline</label>
-                                    <input type="datetime-local" name="project_deadline"
+                                    <input type="datetime-local" name="deadline"
                                         class="form-control form-control-lg rounded-4 border border-dashed"
                                         placeholder="Enter project deadline">
                                 </div>
                                 <div class="col-md-12">
                                     <label for="projectDescription" class="form-label">Project Description</label>
-                                    <textarea name="project_description"
+                                    <textarea name="description"
                                         class="form-control form-control-lg rounded-4 border border-dashed" rows="3"
                                         placeholder="Enter project description"></textarea>
                                 </div>
@@ -161,7 +169,7 @@ if (!isset($_SESSION['logged_in_user'])) {
                                 </div>
                                 <div class="col-md-4">
                                     <label for="budget" class="form-label">Project Budget ($)</label>
-                                    <input type="number" name="project_budget"
+                                    <input type="number" name="budget"
                                         class="form-control form-control-lg rounded-4 border border-dashed"
                                         placeholder="$0.00 USD">
                                 </div>

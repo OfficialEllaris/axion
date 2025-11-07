@@ -2,24 +2,19 @@
 
 session_start();
 
+// Include the connection file
+$dbConn = require __DIR__ . '/connect.php';
+
 include __DIR__ . "/services.php";
 
-if (!isset($_SESSION['users_table'])) {
-    $_SESSION['users_table'] = [];
-}
-
-if (!isset($_SESSION['projects_table'])) {
-    $_SESSION['projects_table'] = [];
-}
-
 if (isset($_POST['onboard_user'])) {
-    onboardUser($_POST);
+    onboardUser($_POST, $dbConn);
     header('Location: ./onboarding');
     exit();
 }
 
 if (isset($_POST['login_user'])) {
-    loginUser($_POST);
+    loginUser($_POST, $dbConn);
     header('Location: ./login');
     exit();
 }
@@ -37,37 +32,37 @@ if (isset($_POST['logout_user'])) {
 }
 
 if (isset($_POST['reset_password'])) {
-    resetPassword($_POST);
+    resetPassword($_POST, $dbConn);
     header('Location: ./account-recovery');
     exit();
 }
 
 if (isset($_POST['update_profile'])) {
-    updateProfile($_POST);
+    updateProfile($_POST, $dbConn);
     header('Location: ./settings');
     exit();
 }
 
 if (isset($_POST['update_password'])) {
-    updatePassword($_POST);
+    updatePassword($_POST, $dbConn);
     header('Location: ./settings');
     exit();
 }
 
 if (isset($_POST['create_project'])) {
-    createProject($_POST);
+    createProject($_POST, $dbConn);
     header('Location: ./dashboard');
     exit();
 }
 
 if (isset($_POST['delete_project'])) {
-    deleteProject($_POST);
+    deleteProject($_POST, $dbConn);
     header('Location: ./dashboard');
     exit();
 }
 
 if (isset($_POST['modify_project'])) {
-    modifyProject($_POST);
+    modifyProject($_POST, $dbConn);
     header('Location: ./manage-project?project_id=' . $_GET['project_id']);
     exit();
 }

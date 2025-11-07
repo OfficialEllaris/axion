@@ -11,6 +11,8 @@ if (!isset($_SESSION['logged_in_user'])) {
     exit();
 }
 
+$user = fetchUserData($dbConn);
+
 ?>
 
 <head>
@@ -48,12 +50,12 @@ if (!isset($_SESSION['logged_in_user'])) {
             <div class="col-md-6">
                 <label for="fullname" class="form-label">Full Name</label>
                 <input type="text" class="form-control form-control-lg rounded-4" name="fullname"
-                    value="<?= $_SESSION['logged_in_user']['fullname'] ?>" placeholder="e.g. John Doe">
+                    value="<?= $user['fullname'] ?>" placeholder="e.g. John Doe">
             </div>
             <div class="col-md-6">
                 <label for="email_address" class="form-label">Email address</label>
                 <input type="email" class="form-control form-control-lg rounded-4" name="email_address"
-                    value="<?= $_SESSION['logged_in_user']['email_address'] ?>" placeholder="e.g. john@example.com">
+                    value="<?= $user['email_address'] ?>" placeholder="e.g. john@example.com">
             </div>
             <div class="col-12">
                 <button type="submit" name="update_profile" class="btn btn-lg btn-success rounded-4 w-auto">

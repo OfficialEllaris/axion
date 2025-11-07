@@ -13,7 +13,7 @@ if (!isset($_SESSION['logged_in_user'])) {
 
 // Fetch project if ID is present
 if (isset($_GET['project_id']) && !empty($_GET['project_id'])) {
-    $project_data = fetchProjectData($_GET);
+    $project_data = fetchProjectData($_GET, $dbConn);
 } else {
     $_SESSION['flash_message'] = "Project ID unavailable!";
     header('Location: ./dashboard');
@@ -54,22 +54,20 @@ if (isset($_GET['project_id']) && !empty($_GET['project_id'])) {
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="projectName" class="form-label">Project Name</label>
-                    <input type="text" name="project_name" value="<?= $project_data['project_name'] ?>"
+                    <input type="text" name="title" value="<?= $project_data['title'] ?>"
                         class="form-control form-control-lg rounded-4 border border-dashed"
                         placeholder="Enter project name">
                 </div>
                 <div class="col-md-6">
                     <label for="projectDeadline" class="form-label">Project Deadline</label>
-                    <input type="datetime-local" name="project_deadline"
-                        value="<?= $project_data['project_deadline'] ?>"
+                    <input type="datetime-local" name="deadline" value="<?= $project_data['deadline'] ?>"
                         class="form-control form-control-lg rounded-4 border border-dashed"
                         placeholder="Enter project deadline">
                 </div>
                 <div class="col-md-12">
                     <label for="projectDescription" class="form-label">Project Description</label>
-                    <textarea name="project_description"
-                        class="form-control form-control-lg rounded-4 border border-dashed" rows="3"
-                        placeholder="Enter project description"><?= $project_data['project_description'] ?></textarea>
+                    <textarea name="description" class="form-control form-control-lg rounded-4 border border-dashed"
+                        rows="3" placeholder="Enter project description"><?= $project_data['description'] ?></textarea>
                 </div>
                 <div class="col-md-12">
                     <span class="badge p-2 text-success border border-success border-dashed">Contractor
@@ -89,12 +87,12 @@ if (isset($_GET['project_id']) && !empty($_GET['project_id'])) {
                 </div>
                 <div class="col-md-4">
                     <label for="budget" class="form-label">Project Budget ($)</label>
-                    <input type="number" name="project_budget" value="<?= $project_data['project_budget'] ?>"
+                    <input type="number" name="budget" value="<?= $project_data['budget'] ?>"
                         class="form-control form-control-lg rounded-4 border border-dashed" placeholder="$0.00 USD">
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <input type="hidden" name="project_id" value="<?= $project_data['project_id'] ?>">
+                <input type="hidden" name="project_id" value="<?= $project_data['id'] ?>">
                 <button type="reset" class="btn btn-lg rounded-4 btn-secondary me-auto">Cancel</button>
                 <button name="modify_project" class="btn btn-lg rounded-4 btn-success">Save Changes</button>
             </div>
